@@ -1,0 +1,2 @@
+2025-08-19 18:26:32,135 - INFO - Loaded processed_stock_data.csv
+2025-08-19 18:26:32,137 - ERROR - Feature engineering failed: 'Date'
