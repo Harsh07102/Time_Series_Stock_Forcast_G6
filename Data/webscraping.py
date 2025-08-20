@@ -50,7 +50,7 @@ def scrape_from_moneycontrol(symbol, num_pages=3):
             time.sleep(1)
 
         except Exception as e:
-            print(f"❌ Exception occurred: {e}")
+            print(f"Exception occurred: {e}")
             return None
 
     if all_data:
@@ -60,27 +60,27 @@ def scrape_from_moneycontrol(symbol, num_pages=3):
         df = df.sort_values("Date")
         return df
     else:
-        print("❌ No valid rows found.")
+        print(" No valid rows found.")
         return None
 
 def fetch_from_yfinance(ticker="ITC.NS", start="2020-01-01", end="2023-12-31"):
     """
     Fallback: Downloads stock data using Yahoo Finance via yfinance.
     """
-    print(f"\n🔄 Downloading from Yahoo Finance: {ticker}")
+    print(f"\n Downloading from Yahoo Finance: {ticker}")
     try:
         df = yf.download(ticker, start=start, end=end)
         df.reset_index(inplace=True)
         df = df[["Date", "Open", "High", "Low", "Close", "Volume"]]
         return df
     except Exception as e:
-        print(f"❌ Failed to fetch from yfinance: {e}")
+        print(f"Failed to fetch from yfinance: {e}")
         return None
 
 def save_csv(df, path):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     df.to_csv(path, index=False)
-    print(f"✅ Data saved to: {path}")
+    print(f"Data saved to: {path}")
 
 if __name__ == "__main__":
     final_path = "data/processed/ITC_stock_data.csv"
@@ -88,10 +88,10 @@ if __name__ == "__main__":
     df = scrape_from_moneycontrol("ITC")
 
     if df is None:
-        print("\n💡 Falling back to API method...")
+        print("\n Falling back to API method...")
         df = fetch_from_yfinance()
 
     if df is not None:
         save_csv(df, final_path)
     else:
-        print("❌ Data retrieval failed completely.")
+        print("Data retrieval failed completely.")
