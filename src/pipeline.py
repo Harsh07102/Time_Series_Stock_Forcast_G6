@@ -57,10 +57,10 @@ def run_pipeline():
     # Load preprocessed data
     try:
         df = pd.read_csv('processed_stock_data.csv')
-        print("✅ Loaded processed_stock_data.csv")
+        print("Loaded processed_stock_data.csv")
         logging.info("Loaded processed_stock_data.csv")
     except FileNotFoundError:
-        print("❌ File not found: Run preprocessing.py first to generate processed_stock_data.csv")
+        print("File not found: Run preprocessing.py first to generate processed_stock_data.csv")
         logging.error("processed_stock_data.csv not found")
         return
 
@@ -80,7 +80,7 @@ def run_pipeline():
         print("🔧 Feature engineering complete")
         logging.info("Feature engineering complete")
     except Exception as e:
-        print(f"❌ Feature engineering failed: {e}")
+        print(f" Feature engineering failed: {e}")
         logging.error(f"Feature engineering failed: {e}")
         return
 
@@ -108,7 +108,7 @@ def run_pipeline():
         ax.set_title("Prophet Residuals")
         save_plot(fig, f"prophet_residuals_{timestamp}.png")
 
-        print("📈 Prophet forecast:")
+        print(" Prophet forecast:")
         print(prophet_forecast.tail())
         logging.info("Prophet forecasting complete")
     except Exception as e:
@@ -136,7 +136,7 @@ def run_pipeline():
         ax.set_title("ARIMA Residuals")
         save_plot(fig, f"arima_residuals_{timestamp}.png")
 
-        print("📉 ARIMA forecast:")
+        print("ARIMA forecast:")
         print(arima_forecast.tail())
         logging.info("ARIMA forecasting complete")
     except Exception as e:

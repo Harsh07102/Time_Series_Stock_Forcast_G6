@@ -30,9 +30,9 @@ def run_pipeline():
     # Load preprocessed data
     try:
         df = pd.read_csv('../Data/procesed/processed_stock_data.csv')
-        print("✅ Loaded processed_stock_data.csv")
+        print(" Loaded processed_stock_data.csv")
     except FileNotFoundError:
-        print("❌ File not found: Make sure preprocessing.py has generated processed_stock_data.csv")
+        print("File not found: Make sure preprocessing.py has generated processed_stock_data.csv")
         return
 
     # Feature Engineering
@@ -52,7 +52,7 @@ def run_pipeline():
         y = df['Close']
         print("🔧 Features created successfully")
     except Exception as e:
-        print(f"❌ Feature engineering failed: {e}")
+        print(f"Feature engineering failed: {e}")
         return
 
     # Model Comparison
@@ -63,18 +63,18 @@ def run_pipeline():
                 'RandomForest': RandomForestRegressor(n_estimators=100, random_state=42)
             }
             results = compare_models(models, X, y)
-            print("📊 Model Comparison Results:")
+            print(" Model Comparison Results:")
             for model, metrics in results.items():
                 print(f"{model}: RMSE={metrics['RMSE']}, STD={metrics['STD']}")
         except Exception as e:
-            print(f"❌ Model comparison failed: {e}")
+            print(f"Model comparison failed: {e}")
 
         # Prophet Forecasting
         try:
             prophet_df = df.reset_index()[['Date', 'Close']].rename(columns={'Date': 'ds', 'Close': 'y'})
             prophet_model = train_prophet(prophet_df)
             prophet_forecast = forecast_prophet(prophet_model, periods=30)
-            print("📈 Prophet forecast generated")
+            print("Prophet forecast generated")
             print(prophet_forecast.tail())
         except Exception as e:
             print(f"⚠️ Prophet forecasting failed: {e}")
@@ -83,7 +83,7 @@ def run_pipeline():
         try:
             arima_model = train_arima(df['Close'], order=(5,1,0))
             arima_forecast = forecast_arima(arima_model, steps=30)
-            print("📉 ARIMA forecast generated")
+            print("ARIMA forecast generated")
             print(arima_forecast.tail())
         except Exception as e:
             print(f"⚠️ ARIMA forecasting failed: {e}")
